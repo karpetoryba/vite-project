@@ -2,21 +2,46 @@
 import { ref } from "vue";
 import CardItemsList from "./components/CardItemsList.vue";
 
-const cardItemsList = ref([
-  {
-    id: 9999,
-    title: "card test",
-  },
-]);
+const cardItemsList = ref([]);
+
+// Add new item to cardItemsList
+const addItemIntoCard = (item) => {
+  console.log("Add new item:", item);
+  cardItemsList.value.push(item);
+};
 </script>
+
 <template>
   <h1>App component</h1>
 
   <nav>
-    <router-link to="/">Home</router-link> /
-    <router-link to="/about">About</router-link> /
+    <RouterLink to="/">Go to Home</RouterLink>
+    <RouterLink to="/about">Go to About</RouterLink>
   </nav>
-  <RouterView />
 
-  <CardItemsList></CardItemsList>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <RouterView @addItemIntoCard="addItemIntoCard" />
+      </div>
+      <div class="col">
+        <CardItemsList
+          title="List items card"
+          :cardItemsList="cardItemsList"
+        ></CardItemsList>
+      </div>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.row {
+  display: flex;
+}
+.col:nth-of-type(1) {
+  flex: 4;
+}
+.col:nth-of-type(2) {
+  flex: 1;
+}
+</style>
